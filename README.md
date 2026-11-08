@@ -1,8 +1,9 @@
 # The Dashboard
 
 A private, password-gated morning view: this week's client focus (from the
-Client Work Board), what's with Abbey, money (QuickFile), weather, and a
-link through to Alfie's school week.
+Client Work Board), open client tasks (from Client Tasks (Master)), what's
+with Abbey across both, money (QuickFile), weather, and a link through to
+Alfie's school week.
 
 ## What's real vs. what needs setup
 
@@ -44,6 +45,9 @@ message saying so instead of fake numbers or a silent blank.
    the top right, go to **Connections**, and add the integration you just
    created. Without this step, the API calls will fail with a permissions
    error even with a valid token.
+4. Do the same for the **Client Tasks (Master)** database — it's a
+   separate database, so sharing one doesn't automatically share the
+   other. Same steps: **"..."** > Connections > add the integration.
 
 ### 3. QuickFile API token
 
@@ -62,6 +66,7 @@ everything from `.env.example`:
 | `DASHBOARD_PASSWORD` | Whatever password you want to gate the dashboard with |
 | `NOTION_TOKEN` | From step 2 |
 | `NOTION_CLIENT_BOARD_DB_ID` | Already filled in `.env.example` — the Client Work Board's ID |
+| `NOTION_CLIENT_TASKS_DB_ID` | Already filled in `.env.example` — the Client Tasks (Master) ID |
 | `QUICKFILE_API_TOKEN` | From step 3 |
 | `QUICKFILE_API_BASE` | Leave as the default unless QuickFile tells you otherwise |
 | `WEATHER_LAT` / `WEATHER_LON` | Leave as default, or set your own coordinates |

@@ -1,4 +1,4 @@
-import { getClientWorkItems } from '../lib/notion';
+import { getClientWorkItems, getClientTasks } from '../lib/notion';
 import { getFinanceSnapshot } from '../lib/quickfile';
 import { getWeather } from '../lib/weather';
 
@@ -40,6 +40,22 @@ function WorkRow({ item, compact }) {
   );
 }
 
+function TaskRow({ task, compact }) {
+  return (
+    <article className={`workrow${compact ? ' compact' : ''}`}>
+      <div className="workrow-top">
+        <strong>{task.task || 'Untitled task'}</strong>
+        {task.priority && (
+          <span className={`pill pill-${task.priority.toLowerCase()}`}>{task.priority}</span>
+        )}
+      </div>
+      {task.clientName && <p className="label">{task.clientName}</p>}
+      {task.notes && <p>{task.notes}</p>}
+      {task.dueDate && <p className="label">Due {formatDate(task.dueDate)}</p>}
+    </article>
+  );
+}
+
 function InvoiceRow({ invoice }) {
   return (
     <div className="invoicerow">
@@ -51,8 +67,9 @@ function InvoiceRow({ invoice }) {
 }
 
 export default async function Page() {
-  const [work, finance, weather] = await Promise.all([
+  const [work, tasks, finance, weather] = await Promise.all([
     getClientWorkItems(),
+    getClientTasks(),
     getFinanceSnapshot(),
     getWeather(),
   ]);
@@ -84,6 +101,15 @@ export default async function Page() {
           {!work.error && work.focus.length === 0 && <Empty>Nothing marked Focus This Week.</Empty>}
           {work.focus.map((item) => (
             <WorkRow key={item.id} item={item} />
+          ))}
+        </div>
+
+        <div className="card tone-primary">
+          <h2>Tasks</h2>
+          {tasks.error && <Notice>Notion: {tasks.error}</Notice>}
+          {!tasks.error && tasks.todo.length === 0 && <Empty>Nothing open on Client Tasks.</Empty>}
+          {tasks.todo.map((t) => (
+            <TaskRow key={t.id} task={t} />
           ))}
         </div>
 
@@ -140,9 +166,17 @@ export default async function Page() {
 
         <div className="card tone-secondary full">
           <h2>With Abbey</h2>
+
+          <h2 style={{ fontSize: 15 }}>Client work</h2>
           {!work.error && work.abbey.length === 0 && <Empty>Nothing with Abbey right now.</Empty>}
           {work.abbey.map((item) => (
             <WorkRow key={item.id} item={item} compact />
+          ))}
+
+          <h2 style={{ fontSize: 15, marginTop: 18 }}>Tasks</h2>
+          {!tasks.error && tasks.abbey.length === 0 && <Empty>No tasks with Abbey right now.</Empty>}
+          {tasks.abbey.map((t) => (
+            <TaskRow key={t.id} task={t} compact />
           ))}
         </div>
       </section>
