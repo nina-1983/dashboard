@@ -65,7 +65,7 @@ everything from `.env.example`:
 | `QUICKFILE_API_TOKEN` | From step 3 |
 | `QUICKFILE_API_BASE` | Leave as the default unless QuickFile tells you otherwise |
 | `WEATHER_LAT` / `WEATHER_LON` | Leave as default, or set your own coordinates |
-| `NEXT_PUBLIC_SCHOOL_PAGE_URL` | The URL of the Gobowen/Maple Class page you already built |
+| `NEXT_SCHOOL_PAGE_URL` | The URL of the Gobowen/Maple Class page you already built |
 
 After adding variables, redeploy (Vercel > Deployments > ⋯ > Redeploy) —
 new env vars don't apply to an already-running deployment.

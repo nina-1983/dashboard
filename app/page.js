@@ -124,17 +124,17 @@ export default async function Page() {
         <div className="card tone-school">
           <h2>Alfie&rsquo;s school week</h2>
           <p className="label">Lunches, clubs and key dates for Maple Class.</p>
-          {process.env.NEXT_PUBLIC_SCHOOL_PAGE_URL ? (
+          {process.env.NEXT_SCHOOL_PAGE_URL ? (
             <a
               className="button"
-              href={process.env.NEXT_PUBLIC_SCHOOL_PAGE_URL}
+              href={process.env.NEXT_SCHOOL_PAGE_URL}
               target="_blank"
               rel="noreferrer"
             >
               Open the school page →
             </a>
           ) : (
-            <Notice>Add NEXT_PUBLIC_SCHOOL_PAGE_URL to link this to the Gobowen page.</Notice>
+            <Notice>Add NEXT_SCHOOL_PAGE_URL to link this to the Gobowen page.</Notice>
           )}
         </div>
 
